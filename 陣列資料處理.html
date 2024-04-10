@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 5px;
+            width: 200px;
+        }
+
+        .btn-all {
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 8px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .result-all, .list-all {
+            margin-top: 20px;
+        }
+
+        .result, .list {
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <label for="name">
+        姓名：
+        <input type="text" name="name" id="name">
+    </label>
+
+    <div class="btn-all">
+        <button class="add">新增</button>
+        <button class="query">查詢</button>
+        <button class="delete">刪除</button>
+    </div>
+
+    <div class="result-all">
+        <span>結果：</span>
+        <span class="result"></span>
+    </div>
+    <div class="list-all">
+        <span>列表：</span>
+        <ul class="list"></ul>
+    </div>
+
+
+    <script>
+        let named = document.querySelector('#name');
+        let addBtn = document.querySelector('.add');
+        let queryBtn = document.querySelector('.query');
+        let deleteBtn = document.querySelector('.delete');
+        let resultAll = document.querySelector('.result');
+        let listAll = document.querySelector('.list');
+        let dataArr = [];
+
+        addBtn.addEventListener('click', () => {
+            dataArr.push(named.value);
+            resultAll.innerHTML = named.value + '新增成功';
+            showAll();
+        })
+
+        function showAll() {
+            listAll.innerHTML = '';
+            dataArr.forEach((item, index) => {
+                console.log(item);
+                listAll.innerHTML += `<br>${item}`;
+            });
+        };
+
+        queryBtn.addEventListener('click', () => {
+            let findIndex = dataArr.indexOf(named.value);
+            if (findIndex === -1) {
+                resultAll.innerHTML = named.value + '找不到';
+            } else {
+                resultAll.innerHTML = named.value + `找到，在第 ${findIndex + 1}`; 
+            }
+            showAll()
+        });
+
+        deleteBtn.addEventListener('click', () => {
+            let findIndex = dataArr.indexOf(named.value);
+            if (findIndex === -1) {
+                resultAll.innerHTML = named.value + '找不到';
+            } else {
+                dataArr.splice(findIndex, 1);
+                resultAll.innerHTML = named.value + '已刪除';
+            }
+            showAll();
+        });
+    </script>
+</body>
+
+</html>
